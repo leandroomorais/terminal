@@ -1,0 +1,57 @@
+#{extends 'tags/template.html' /} 
+<link rel="stylesheet" media="screen" href="@{'/public//css/FormEleitor.css'}">
+<div id="content">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <div class="col-md-12 jumbotron">
+            <div class="row">
+                <form action="Eleitores.justificar" method="post">
+                    <input type="hidden" value="${eleitor?.id}" name="eleitor.id">
+
+                    <div class="col-md-7"></div>
+
+                    <div class="col-md-5 form-group">
+                        #{if eleitor.foto?.exists()}
+                        <img  src="@{Eleitores.foto(eleitor.id)}" accept="image/*" class="img-responsive" class="img-thumbnail">
+                        #{/if}
+                        #{else}
+                        <img  src="@{Eleitores.fotoPadrao}" accept="image/*"  class="img-responsive" class="img-thumbnail">
+                        #{/else}
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label for="nome">Nome</label> 
+                        <input class="form-control" id="nome" type="text" readonly value="${eleitor?.nome}" name="eleitor.nome">
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label for="titulo">Titulo</label> 
+                        <input class="form-control" id="titulo" type="text" readonly value="${eleitor?.titulo}" name="eleitor.titulo">
+                    </div> 
+
+                    <div class="form-group col-md-12">
+                        <label for="status">Status</label> 
+                        <input class="form-control" id="status" type="text" readonly value="${eleitor?.statusEle}" name="eleitor.statusEle">
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label for="voto">Voto</label> 
+                        <input class="form-control" id="voto" type="text" readonly value="${eleitor?.statusVot}" name="eleitor.statusVot">
+                    </div>
+                    <div class="col-md-12">
+                    <a href="@{Home.home}" class="btn btn-success font">Home</a>
+                </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4"></div>
+
+    <footer class="sticky-footer col-md-12">
+        <div class="text-center">
+            <small>Copyright © Your Website 2018</small>
+        </div>
+    </footer>
+</div>

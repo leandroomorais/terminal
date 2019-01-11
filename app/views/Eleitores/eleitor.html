@@ -1,0 +1,123 @@
+#{extends 'tags/template.html' /} 
+<link rel="stylesheet" media="screen" href="@{'/public//css/FormEleitor.css'}">
+<div id="content">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <div class="col-md-12 jumbotron">
+            <div class="row">
+                <form action="" method="post">
+                    <input type="hidden" value="${eleitor?.id}" name="eleitor.id">
+
+                    <div class="col-md-7"></div>
+
+                    <div class="col-md-5 form-group">
+                        #{if eleitor.foto?.exists()}
+                        <img  src="@{Eleitores.foto(eleitor.id)}" accept="image/*" class="img-responsive" class="img-thumbnail">
+                        #{/if}
+                        #{else}
+                        <img  src="@{Eleitores.fotoPadrao}" accept="image/*"  class="img-responsive" class="img-thumbnail">
+                        #{/else}
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label for="nome">Nome</label> 
+                        <input class="form-control" id="nome" type="text" readonly value="${eleitor?.nome}" name="eleitor.nome">
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label for="titulo">Titulo</label> 
+                        <input class="form-control" id="titulo" type="text" readonly value="${eleitor?.titulo}" name="eleitor.titulo">
+                    </div> 
+
+                    <div class="form-group col-md-12">
+                        <label for="status">Status</label> 
+                        <input class="form-control" id="status" type="text" readonly value="${eleitor?.statusEle}" name="eleitor.statusEle">
+                    </div> 
+
+                    <div class="form-group col-md-12">
+                        <label for="voto">Voto</label> 
+                        <input class="form-control" id="voto" type="text" readonly value="${eleitor?.statusVot}" name="eleitor.statusVot">
+                    </div>
+                </form>
+
+                <div class="col-md-12">
+                    <button class="btn btn-success font" data-toggle="modal" data-target="#button-modal">Liberar Urna</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4"></div>
+
+    <footer class="sticky-footer col-md-12">
+        <div class="text-center">
+            <small>Copyright © Your Website 2018</small>
+        </div>
+    </footer>
+</div>
+
+
+<!--Modal-->
+<div class="modal fade" id="button-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modalLabel">Liberar Urna</h4>
+            </div>
+            <div class="modal-body">Deseja realmente Libera urna?</div>
+            <div class="modal-footer">
+
+                <a href="@{bloquearDesbloquearUrna(eleitor, 'liberada')}"><button type="button" class="btn btn-primary">sim</button></a>
+                <a type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--tela de Bloqueio terminal-->
+<div class="col-md-12" id="lockscreen">
+
+    <div class="col-md-4"></div>
+    <div class="col-md-4  caixa">
+        <div class="col-md-4"></div>
+        <div class="col-md-6">
+            <div class="row">
+               <a class="aguarde">Aguardando Votação...</a>
+                
+                <a href="@{cancelarVotacaoAtual(eleitor, 'true')}"> <button type="button" class="btn btn-success lockscreen-btn btn-cancelar">Cancelar Votação</button></a>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+
+<!--se liberou urna-->
+#{if liberou == false}
+<script type="text/javascript">
+    locked = false;
+    function lockScreen() {
+        if (locked == true) {
+            clearTimeout(lockscreen);
+        } else {
+            lockscreen = setTimeout(function () {
+                triggerToggle = document.getElementById("lockscreen");
+                triggerToggle.style.display = 'initial';
+
+                locked = true;
+                clearTimeout(lockscreen);
+            }, 0000);
+        }
+    }
+
+    document.querySelector('.lockscreen-btn').onclick = unlock;
+    function unlock() {
+        triggerToggle.style.display = 'none';
+        locked = false;
+    }
+    lockScreen();
+</script>
+#{/if}

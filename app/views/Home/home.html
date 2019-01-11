@@ -1,0 +1,14 @@
+#{extends 'tags/template.html' /} #{set title:'Home' /}
+<link rel="stylesheet" media="screen" href="@{'/public//css/Home.css'}">
+
+<div class="container login col-md-12">
+
+    <form class="form-signin" action="@{Eleitores.getEleitor}" method="POST">
+        <h2 class="form-signin-heading"><img src="../public/images/icone.png"/></h2>
+        <input  name="titulo" class="form-control  input-titulo" type="text" placeholder="Ex.: 20152094040335">  
+        
+        <div class="container-login100-form-btn">
+            <button class="login100-form-btn btn " type="submit">Busca</button>
+        </div>
+    </form>
+</div> <!-- /container -->

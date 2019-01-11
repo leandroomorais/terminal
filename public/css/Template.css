@@ -1,0 +1,39 @@
+#background {
+	background: #ebebeb url( ../images/background.png)  no-repeat ;
+}
+
+body{
+	background: #E9E9E9;
+}
+.margem{
+    margin-top: 10px;
+}
+.sair{
+    margin-top: 15px;
+}
+.lupa{
+    margin-left: 10px;
+}
+
+p{
+    font-family: OpenSans-Regular;
+}
+
+a {
+    font-family: OpenSans-Regular;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #fff;
+    margin: 0px;
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    cursor:pointer;
+}
+
+a:hover {
+    text-decoration: none;
+        color: #fff;
+}
+

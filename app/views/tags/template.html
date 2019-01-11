@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Terminal</title>
+        <link rel="shortcut icon" href="@{'/public/images/icone.png'}">
+        <link rel="stylesheet" media="screen" href="@{'/public/bootstrap-3.3.7/css/bootstrap-theme.min.css'}">
+        <link rel="stylesheet" media="screen" href="@{'/public/bootstrap-3.3.7/css/bootstrap.min.css'}">
+        <link rel="stylesheet" media="screen" href="@{'/public//css/Template.css'}">
+        #{get 'moreStyles' /}
+    </head>
+    <body onload="setInterval(' Atualizar()', 5000)">
+        <nav id="background">
+            <div class="container-fluid">
+                <nav>
+                    <div class="nav navbar-nav navbar-right">
+                        <div class="row">
+
+                            <div class="col-md-7">
+                                <div class="col-md-1">
+                                    <img class="margem" src="@{'/public/images/Icone.png'}" width="30" height="30" alt="">
+                                </div>
+
+                                <div class="col-md-9">
+                                    #{if liberou}
+                                    <a class="navbar-brand">Terminal Eleitoral</a   >
+                                    #{/if}
+                                    #{else}
+                                    <a class="navbar-brand" href="@{Home.home}">Terminal Eleitoral</a>
+                                    #{/else}
+                                      <a>15 Seção</a>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-5">
+                                <div>
+                                    <form class="margem col-md-11" action="@{Eleitores.justificar()}" method="POST">
+
+                                        #{if liberou}
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <input name="idSecao" class="form-control" type="text" placeholder="Seção: 64"  readonly>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <input  name="titulo" class="form-control" type="text" placeholder="Ex.: 20152094040335"  readonly>
+                                                    <span class="input-group-btn">
+                                                        <input class="btn lupa" type="button" class="glyphicon glyphicon-search" />
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        #{/if}
+                                        #{else}
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <input name="idSecao" class="form-control" type="text" placeholder="Seção: 64">
+                                            </div>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <input  name="titulo" class="form-control" type="text" placeholder="Ex.: 20152094040335">
+                                                    <span class="input-group-btn">
+                                                        <button  class="btn lupa" type="submit" >Justificar <span class="   glyphicon glyphicon-search"></span></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        #{/else}
+                                    </form>
+                                </div>
+
+                                <div class=" col-md-1 sair">
+                                    #{if liberou}
+                                    <a><span  class="glyphicon glyphicon-off" ></span></a>
+                                    #{/if}
+                                    #{else}
+                                    <a data-toggle="modal" data-target="#button-modal-off"><span  class="glyphicon glyphicon-off" ></span></a>
+                                    #{/else}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+
+        #{if flash.success}
+        <div class="alert alert-success">
+            <center><p>${flash.success.raw()}</p></center>
+        </div>
+        #{/if}
+
+        #{if flash.error}
+        <div class="alert alert-danger">
+            <center><p>${flash.error.raw()}</p></center>
+        </div>
+        #{/if}
+
+
+        <!--Modal de fecha terminal-->
+        <div class="modal fade" id="button-modal-off" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="modalLabel">Encerrar Votação</h4>
+                    </div>
+
+                    <form action="@{Logins.finalizarVotacao}" method="post">
+                        <div class="modal-body">
+                            <label>Informe o código de confirmação.</label>
+                            <input type="password" name="numero"  class="form-control"  placeholder="Ex.: 333333333"/>
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="submit" class="btn btn-success">sim</button>
+                            <a type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        #{doLayout /}
+
+        <script src="@{'/public/bootstrap-3.3.7/jquery/jquery-3.3.1.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+        <script src="@{'/public/bootstrap-3.3.7/js/bootstrap.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+        #{get 'moreScript' /}
+    </body>
+    #{if liberou == false}
+     <script type="text/javascript">
+            function Atualizar(){
+            window.location.reload();
+            }
+    </script>
+    #{/if}
+</html>
